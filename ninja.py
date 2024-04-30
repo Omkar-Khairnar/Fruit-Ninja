@@ -131,3 +131,37 @@ while game_running:
     current_time = pygame.time.get_ticks()
     elapsed_time = (current_time - start_time) // 1000
     remaining_time = game_time - elapsed_time
+
+    # Update and display timer
+    timer_text = font.render('Time : ' + str(remaining_time), True, (255, 255, 255),BLACK)
+    gameDisplay.blit(timer_text, (WIDTH - 400, 0))
+
+    if remaining_time <= 0:
+        show_gameover_screen()
+        game_over = True
+
+    for key, value in data.items():
+        if value['throw']:
+            value['x'] += value['speed_x']  # moving the fruits in x-coordinates
+            value['y'] += value['speed_y']  # moving the fruits in y-coordinate
+            value['speed_y'] += (1 * value['t'])  # increasing y-corrdinate
+            value['t'] += 1  # increasing speed_y for next loop
+
+            if value['y'] <= 800:
+                gameDisplay.blit(value['img'],
+                                 (value['x'], value['y']))  # displaying the fruit inside screen dynamically
+            else:
+                generate_random_fruits(key)
+
+            current_position = pygame.mouse.get_pos()  # gets the current coordinate (x, y) in pixels of the mouse
+
+            if not value['hit'] and current_position[0] > value['x'] and current_position[0] < value['x'] + 60 \
+                    and current_position[1] > value['y'] and current_position[1] < value['y'] + 60:
+                if key == 'bomb':
+                    player_lives -= 1
+                    if player_lives == 0:
+                        hide_cross_lives(690, 15)
+                    elif player_lives == 1:
+                        hide_cross_lives(725, 15)
+                    elif player_lives == 2:
+                        hide_cross_lives(760, 15)
