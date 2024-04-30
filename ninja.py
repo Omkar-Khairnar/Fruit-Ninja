@@ -11,7 +11,7 @@ WIDTH = 800
 HEIGHT = 500
 FPS = 12  # controls how often the gameDisplay should refresh. In our case, it will refresh every 1/12th second
 pygame.init()
-pygame.display.set_caption('Fruit-Ninja Game -- Python.hunt')
+pygame.display.set_caption('Fruit-Ninja Game')
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))  # setting game display size
 clock = pygame.time.Clock()
 
