@@ -165,3 +165,26 @@ while game_running:
                         hide_cross_lives(725, 15)
                     elif player_lives == 2:
                         hide_cross_lives(760, 15)
+                          # if the user clicks bombs for three time, GAME OVER message should be displayed and the window should be reset
+                    if player_lives < 0:
+                        show_gameover_screen()
+                        game_over = True
+
+                    half_fruit_path = "images/explosion.png"
+                else:
+                    half_fruit_path = "images/" + "half_" + key + ".png"
+
+                value['img'] = pygame.image.load(half_fruit_path)
+                value['speed_x'] += 10
+                if key != 'bomb':
+                    score += 1
+                score_text = font.render('Score : ' + str(score), True, (255, 255, 255))
+                value['hit'] = True
+        else:
+            generate_random_fruits(key)
+
+    pygame.display.update()
+    clock.tick(
+        FPS)  # keep loop running at the right speed (manages the frame/second. The loop should update afer every 1/12th pf the sec
+
+pygame.quit()
