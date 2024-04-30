@@ -103,3 +103,31 @@ def show_gameover_screen():
             if event.type == pygame.KEYUP:
                 waiting = False
 
+# Game Loop
+first_round = True
+game_over = True  # terminates the game While loop if more than 3-Bombs are cut
+game_running = True  # used to manage the game loop
+while game_running:
+    if game_over:
+        if first_round:
+            show_gameover_screen()
+            first_round = False
+        game_over = False
+        player_lives = 3
+        draw_lives(gameDisplay, 690, 5, player_lives, 'images/red_lives.png')
+        score = 0
+        start_time = pygame.time.get_ticks()  # reset timer
+
+    for event in pygame.event.get():
+        # checking for closing window
+        if event.type == pygame.QUIT:
+            game_running = False
+
+    gameDisplay.blit(background, (0, 0))
+    gameDisplay.blit(score_text, (0, 0))
+    draw_lives(gameDisplay, 690, 5, player_lives, 'images/red_lives.png')
+
+    # Calculate remaining time
+    current_time = pygame.time.get_ticks()
+    elapsed_time = (current_time - start_time) // 1000
+    remaining_time = game_time - elapsed_time
