@@ -66,3 +66,40 @@ def hide_cross_lives(x, y):
 
 # Generic method to draw fonts on the screen
 font_name = pygame.font.match_font('comic.ttf')
+
+def draw_text(display, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    gameDisplay.blit(text_surface, text_rect)
+
+
+# draw players lives
+def draw_lives(display, x, y, lives, image):
+    for i in range(lives):
+        img = pygame.image.load(image)
+        img_rect = img.get_rect()  # gets the (x,y) coordinates of the cross icons (lives on the the top rightmost side)
+        img_rect.x = int(x + 35 * i)  # sets the next cross icon 35pixels awt from the previous one
+        img_rect.y = y  # takes care of how many pixels the cross icon should be positioned from top of the screen
+        display.blit(img, img_rect)
+
+
+# show game over display & front display
+def show_gameover_screen():
+    gameDisplay.blit(background, (0, 0))
+    draw_text(gameDisplay, "FRUIT NINJA!", 90, WIDTH / 2, HEIGHT / 4)
+    if not game_over:
+        draw_text(gameDisplay, "Score : " + str(score), 50, WIDTH / 2, HEIGHT / 2)
+
+    draw_text(gameDisplay, "Press a key to begin!", 64, WIDTH / 2, HEIGHT * 3 / 4)
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                waiting = False
+
